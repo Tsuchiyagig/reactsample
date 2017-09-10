@@ -1,0 +1,67 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>react helloworld</title>
+    <style>
+    .age-error{
+      color : red;
+    }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script crossorigin src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <script type="text/babel">
+      class User {
+        constructor(id, name, age, gender ,status) {
+          this.id = id;
+          this.name = name;
+          this.age = age;
+          this.gender = gender;
+        }
+      }
+      function getUserList(){
+        var userArray = [];
+        userArray.push(new User(1, 'TANAKA', 22, 1));
+        userArray.push(new User(2, 'YAMADA', 34, 0));
+        userArray.push(new User(3, 'SATO', 50, 1));
+        userArray.push(new User(4, 'SUZUKI', 15, 0));
+
+        return userArray;
+      }
+      function UserName(props){
+        return <span className="name">{props.name}</span>;
+      }
+      function UserAge(props){
+        var highlight = props.age < 18 ? 'age-error' : 'age';
+        return <span className={highlight}>{props.age}</span>;
+      }
+      function UserGender(props){
+        var gender = props.gender ? '男' : '女';
+        return <span className="name">{gender}</span>;
+      }
+
+      function UserList(props) {
+        var listHtml = [];
+        for (var userObject of props.userObject) {
+          listHtml.push(<div key={userObject.id}>
+            名前 : <UserName name={userObject.name} />　
+            年齢 : <UserAge age={userObject.age} />　
+            性別 : <UserGender gender={userObject.gender} />
+          </div>);
+        }
+        return <div>{listHtml}</div>;
+      }
+
+      var userList = getUserList();
+
+      const element = <UserList userObject={userList} />;
+      ReactDOM.render(
+        element,
+        document.getElementById('app')
+      );
+    </script>
+</body>
+</html>
